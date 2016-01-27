@@ -16,6 +16,7 @@ var loopAllInputs=document.getElementsByTagName('input');
 
 //startOf: events app method
 var eventsApp={
+	filterButtonClick: function(arg1){$(arg1).click();},
 	init: function() {
 		for(var i=0; i &lt; loopAllInputs.length; i++) {
       		if($(loopAllInputs[i]).val()=='Search' || $(loopAllInputs[i]).val()=='Clear Search') {
@@ -35,7 +36,16 @@ $(document).ready(function(){eventsApp.init();});
 	<div id="page-wrapper">
 		<div class="container-fluid">
 			<!--startOf: hidden fields-->
-			<div class="hidden"></div>
+			<div class="hidden">
+				<filterbutton name="DDC01" id="ddc01FilterBttn" group="ddcFilterGroup">
+                	<on>on</on>
+                  	<off>off</off>
+                </filterbutton>
+				<filterbutton name="DDC02" id="ddc02FilterBttn" group="ddcFilterGroup">
+                	<on>on</on>
+                  	<off>off</off>
+                </filterbutton>
+			</div>
 			<!--startOf: navigation bar-->
 			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         		<div class="navbar-header">
@@ -58,11 +68,30 @@ $(document).ready(function(){eventsApp.init();});
                 					<viewlink name="defaultInput" id="defaultInputLink">
                 						<i class="fa fa-plus fa-fw"></i> Add Record
                 					</viewlink>
-                				</li>              					
+                				</li>
                 				<li>
                 					<pdflink>
                 						<i class="fa fa-file-pdf-o fa-fw"></i> Print PDF
                 					</pdflink>
+                				</li>
+                			</ul>
+                		</li>
+                	</ul>
+          			<ul class="nav navbar-nav">
+            			<li class="dropdown">
+              				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                				<i class="fa fa-list-alt fa-fw"></i> Filters <b class="caret"></b>
+                			</a>
+              				<ul class="dropdown-menu">
+                				<li>
+                					<a href="#" id="ddc01FilterLink" onclick="eventsApp.filterButtonClick('#ddc01FilterBttn');">
+                						<i class="fa fa-filter fa-fw"></i> DDC01
+                					</a>
+                				</li>
+                				<li>
+                					<a href="#" id="ddc02FilterLink" onclick="eventsApp.filterButtonClick('#ddc02FilterBttn');">
+                						<i class="fa fa-filter fa-fw"></i> DDC02
+                					</a>
                 				</li>
                 			</ul>
                 		</li>
