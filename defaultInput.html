@@ -1,0 +1,484 @@
+<html version="6" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<head>
+<title>Texas Events II</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--startOf: css-->
+<link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/sb-admin.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--startOf: custom css-->
+<style type="text/css">
+	table{display: none;}
+</style>
+<!--startOf: js-->
+<script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/bootstrap.min.js"></script>
+<!--startOf: custom js-->
+<script type="text/javascript">
+//startOf: declaring global variables
+var dataID='<xsl:value-of select="/data/@dataid"></xsl:value-of>';
+
+//startOf: events app method
+var eventsApp={
+	pad: function(arg1) {
+		if(arg1 &lt; 10) {
+			return '0' + arg1;
+		} else {
+    		return arg1;
+  		}
+	},
+	dataTimeAutoPopulate: function() {
+		var newDateTime=(new Date().getMonth()+1)+'/'+this.pad(new Date().getDate())+'/'+new Date().getFullYear();
+  		newDateTime+=' '+this.pad(new Date().getHours())+':'+this.pad(new Date().getMinutes())+':'+this.pad(new Date().getSeconds());
+  		$('#dateTime').val(newDateTime);
+	},
+	dataTimeUpatedAutoPopulate: function() {
+		var newDateTimeUpdate=(new Date().getMonth()+1)+'/'+this.pad(new Date().getDate())+'/'+new Date().getFullYear();
+  		newDateTimeUpdate+=' '+this.pad(new Date().getHours())+':'+this.pad(new Date().getMinutes())+':'+this.pad(new Date().getSeconds());
+  		$('#dataTime').addClass('hidden');
+  		$('#dateTimeUpdate').val(newDateTimeUpdate).removeClass('hidden');
+  	},
+  	saveBttnClick: function(){$('#saveBttn').click()},
+  	returnBttnClick: function(){$('#returnBttn').click();},
+  	init: function() {
+		if(dataID==0) {
+			$('#addEditSPAN').html('Add Record');
+			this.dataTimeAutoPopulate();
+		}
+		if(dataID!=0) {
+			$('#addEditSPAN').html('Edit Record');
+			$('#advancedOptionsDIV').removeClass('hidden');
+			this.dataTimeUpatedAutoPopulate();
+		}
+		$('#accountUsername').val('<value-of select="/data/@username"></value-of>');
+		$('#accountPosition').val('<value-of select="/data/@positionname"></value-of>');
+		$('#accountEmail').val('<value-of select="/data/userdetail/@primaryemail"/>');
+		$('#accountPhone').val('<value-of select="/data/userdetail/@officephone"/>');
+	}
+};
+
+$(document).ready(function(){eventsApp.init();});
+</script>
+</head>
+<body>
+	<form id="defaultInput">
+		<div id="page-wrapper">
+			<div class="container">
+				<!--startOf: hidden fields-->
+				<div class="hidden">
+					<grouplist />
+					<incidentname />
+					<savebutton id="saveBttn"></savebutton>
+					<returnbutton id="returnBttn"></returnbutton>
+					<input type="text" id="accountUsername" name="accountUsername" />
+					<input type="text" id="accountPosition" name="accountPosition" />
+					<input tupe="text" id="accountEmail" name="accountEmail" />
+					<input type="text" id="accountPhone" name="accountPhone" />
+				</div>
+				<!--startOf: navigation bar-->
+				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        			<div class="navbar-header">
+          				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            				<span class="sr-only">Toggle navigation</span>
+            				<span class="icon-bar"></span>
+            				<span class="icon-bar"></span>
+            				<span class="icon-bar"></span>
+          				</button>
+          				<viewlink class="navbar-brand" name="defaultDisplay">Texas Events</viewlink>
+        			</div>
+        			<div class="collapse navbar-collapse navbar-ex1-collapse">
+          				<ul class="nav navbar-nav">
+            				<li class="dropdown">
+              					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                					<i class="fa fa-list-alt fa-fw"></i> Actions <b class="caret"></b>
+                				</a>
+              					<ul class="dropdown-menu">
+                					<li>
+                						<pdflink>
+                							<i class="fa fa-file-pdf-o fa-fw"></i> Print PDF
+                						</pdflink>
+                					</li>
+                				</ul>
+                			</li>
+                		</ul>
+                	</div>
+                </nav>
+				<!--startOf: page heading-->
+				<div class="row">
+					<div class="col-lg-12">
+						<h3 class="page-header">
+							<span id="addEditSPAN"></span>
+							<!--startOf: top save and cancel buttons-->
+							<div class="span4 pull-right" style="text-align: right;">
+								<button type="button" class="btn btn-success" id="saveBttnTop" onclick="eventsApp.saveBttnClick();">
+							   		<i class="fa fa-check"></i> Save
+							   	</button><space/>
+							   	<button type="button" class="btn btn-danger" id="cancelBttnTop" onclick="eventsApp.returnBttnClick();">
+              						<i class="fa fa-times"></i> Cancel
+              					</button>
+              				</div>
+						</h3>
+						<ol class="breadcrumb">
+            				<li>
+              					<i class="fa fa-home" /> Home
+                  			</li>
+            				<li class="active">
+              					<i class="fa fa-plus" /> Add/Edit Record
+                  			</li>
+          				</ol>						
+					</div>
+				</div>
+				<!--startOf: main content-->
+				<div class="row">
+					<div class="col-lg-12">
+              			<div class="form-group">
+                			<label for="eventType" class="col-sm-2 control-label">Event Type:</label>
+                			<div class="col-sm-10" style="margin-bottom: 8px;">
+								<select id="eventType" name="eventType" class="form-control">
+									<option></option>
+									<option value="!---Information Only---!">!---Information Only---!</option>
+									<option value="Activation - DDC">Activation - DDC</option>
+									<option value="Activation - Local EOC">Activation - Local EOC</option>
+									<option value="Activation - SOC Teams \ EM Council">Activation - SOC Teams \ EM Council</option>
+									<option value="Air Medical / Air Evac">Air Medical / Air Evac</option>
+									<option value="Biological">Biological</option>
+									<option value="Chemical">Chemical</option>
+									<option value="Damages - Severe Weather / Wind / Hail">Damages - Severe Weather / Wind / Hail</option>
+									<option value="Evacuations">Evacuations</option>
+									<option value="Explosion">Explosion</option>
+									<option value="Fire">Fire</option>
+									<option value="Flood">Flood</option>
+									<option value="Flooding - Flash">Flooding - Flash</option>
+									<option value="Flooding - River">Flooding - River</option>
+									<option value="Hostage">Hostage</option>
+									<option value="Hurricane">Hurricane</option>
+									<option value="Law Enforcement">Law Enforcement</option>
+									<option value="Lost/Missing Person">Lost/Missing Person</option>
+									<option value="Mass Casualty">Mass Casualty</option>
+									<option value="Mass Gathering Event">Mass Gathering Event</option>
+									<option value="Media">Media</option>
+									<option value="Medical/EMS">Medical/EMS</option>
+									<option value="Nuclear">Nuclear</option>
+									<option value="Offsite Interaction">Offsite Interaction</option>
+									<option value="Protective Action">Protective Action</option>
+									<option value="Radiological">Radiological</option>
+									<option value="Security">Security</option>
+									<option value="SWAT">SWAT</option>
+									<option value="Terrorist">Terrorist</option>
+									<option value="Water Rescues">Water Rescues</option>
+									<option value="Weather Impact Incidents / Reports">Weather Impact Incidents / Reports</option>
+								</select>
+                			</div>
+              			</div>
+              			<div class="form-group">
+                			<label for="dateTime" class="col-sm-2 control-label">Date/Time:</label>
+                			<div class="col-sm-10" style="margin-bottom: 8px;">
+                  				<input type="text" id="dateTime" name="dateTime" class="form-control" />
+                  				<input type="text" id="dateTimeUpdate" name="dateTimeUpdate" class="form-control hidden" />
+                			</div>
+              			</div>
+              			<div class="form-group">
+                			<label for="location" class="col-sm-2 control-label">Location:</label>
+                			<div class="col-sm-10" style="margin-bottom: 8px;">
+                  				<input type="text" id="location" name="location" class="form-control" />
+                			</div>
+              			</div>
+              			<div class="form-group">
+              				<label for="county" class="col-sm-2 control-label">County:</label>
+              				<div class="col-sm-10" style="margin-bottom: 8px;">
+              					<select id="county" name="county" class="form-control">
+									<option></option>
+									<option value="Armstrong">Armstrong</option>
+									<option value="Briscoe">Briscoe</option>
+									<option value="Carson">Carson</option>
+									<option value="Castro">Castro</option>
+									<option value="Childress">Childress</option>
+									<option value="Collingsworth">Collingsworth</option>
+									<option value="Dallam">Dallam</option>
+									<option value="Deaf Smith">Deaf Smith</option>
+									<option value="Donley">Donley</option>
+									<option value="Gray">Gray</option>
+									<option value="Hall">Hall</option>
+									<option value="Hansford">Hansford</option>
+									<option value="Hartley">Hartley</option>
+									<option value="Hemphill">Hemphill</option>
+									<option value="Hutchinson">Hutchinson</option>
+									<option value="Lipscomb">Lipscomb</option>
+									<option value="Moore">Moore</option>
+									<option value="Ochiltree">Ochiltree</option>
+									<option value="Oldham">Oldham</option>
+									<option value="Parmer">Parmer</option>
+									<option value="Potter">Potter</option>
+									<option value="Randall">Randall</option>
+									<option value="Roberts">Roberts</option>
+									<option value="Sherman">Sherman</option>
+									<option value="Swisher">Swisher</option>
+									<option value="Wheeler">Wheeler</option>
+									<option value="Bailey">Bailey</option>
+									<option value="Cochran">Cochran</option>
+									<option value="Crosby">Crosby</option>
+									<option value="Dickens">Dickens</option>
+									<option value="Floyd">Floyd</option>
+									<option value="Garza">Garza</option>
+									<option value="Hale">Hale</option>
+									<option value="Hockley">Hockley</option>
+									<option value="King">King</option>
+									<option value="Lamb">Lamb</option>
+									<option value="Lubbock">Lubbock</option>
+									<option value="Lynn">Lynn</option>
+									<option value="Motley">Motley</option>
+									<option value="Terry">Terry</option>
+									<option value="Yoakum">Yoakum</option>
+									<option value="Archer">Archer</option>
+									<option value="Baylor">Baylor</option>
+									<option value="Clay">Clay</option>
+									<option value="Cottle">Cottle</option>
+									<option value="Foard">Foard</option>
+									<option value="Hardeman">Hardeman</option>
+									<option value="Jack">Jack</option>
+									<option value="Montague">Montague</option>
+									<option value="Wichita">Wichita</option>
+									<option value="Wilbarger">Wilbarger</option>
+									<option value="Young">Young</option>
+									<option value="Collin">Collin</option>
+									<option value="Denton">Denton</option>
+									<option value="Dallas">Dallas</option>
+									<option value="Ellis">Ellis</option>
+									<option value="Erath">Erath</option>
+									<option value="Hood">Hood</option>
+									<option value="Hunt">Hunt</option>
+									<option value="Johnson">Johnson</option>
+									<option value="Kaufman">Kaufman</option>
+									<option value="Navarro">Navarro</option>
+									<option value="Palo Pinto">Palo Pinto</option>
+									<option value="Parker">Parker</option>
+									<option value="Rockwall">Rockwall</option>
+									<option value="Somervell">Somervell</option>
+									<option value="Tarrant">Tarrant</option>
+									<option value="Wise">Wise</option>
+									<option value="Bowie">Bowie</option>
+									<option value="Cass">Cass</option>
+									<option value="Delta">Delta</option>
+									<option value="Franklin">Franklin</option>
+									<option value="Hopkins">Hopkins</option>
+									<option value="Lamar">Lamar</option>
+									<option value="Morris">Morris</option>
+									<option value="Red River">Red River</option>
+									<option value="Titus">Titus</option>
+									<option value="Anderson">Anderson</option>
+									<option value="Cherokee">Cherokee</option>
+									<option value="Harrison">Harrison</option>
+									<option value="Henderson">Henderson</option>
+									<option value="Marion">Marion</option>
+									<option value="Panola">Panola</option>
+									<option value="Rains">Rains</option>
+									<option value="Rusk">Rusk</option>
+									<option value="Smith">Smith</option>
+									<option value="Upshur">Upshur</option>
+									<option value="Van Zandt">Van Zandt</option>
+									<option value="Wood">Wood</option>
+									<option value="Brown">Brown</option>
+									<option value="Callahan">Callahan</option>
+									<option value="Coleman">Coleman</option>
+									<option value="Comanche">Comanche</option>
+									<option value="Eastland">Eastland</option>
+									<option value="Fisher">Fisher</option>
+									<option value="Haskell">Haskell</option>
+									<option value="Jones">Jones</option>
+									<option value="Kent">Kent</option>
+									<option value="Knox">Knox</option>
+									<option value="Mitchell">Mitchell</option>
+									<option value="Nolan">Nolan</option>
+									<option value="Runnels">Runnels</option>
+									<option value="Scurry">Scurry</option>
+									<option value="Shackelford">Shackelford</option>
+									<option value="Stephens">Stephens</option>
+									<option value="Stonewall">Stonewall</option>
+									<option value="Taylor">Taylor</option>
+									<option value="Throckmorton">Throckmorton</option>
+									<option value="Brewster">Brewster</option>
+									<option value="Culberson">Culberson</option>
+									<option value="El Paso">El Paso</option>
+									<option value="Hudspeth">Hudspeth</option>
+									<option value="Jeff Davis">Jeff Davis</option>
+									<option value="Presidio">Presidio</option>
+									<option value="Andrews">Andrews</option>
+									<option value="Borden">Borden</option>
+									<option value="Crane">Crane</option>
+									<option value="Dawson">Dawson</option>
+									<option value="Ector">Ector</option>
+									<option value="Gaines">Gaines</option>
+									<option value="Glasscock">Glasscock</option>
+									<option value="Howard">Howard</option>
+									<option value="Loving">Loving</option>
+									<option value="Martin">Martin</option>
+									<option value="Midland">Midland</option>
+									<option value="Pecos">Pecos</option>
+									<option value="Reeves">Reeves</option>
+									<option value="Terrell">Terrell</option>
+									<option value="Upton">Upton</option>
+									<option value="Ward">Ward</option>
+									<option value="Winkler">Winkler</option>
+									<option value="Coke">Coke</option>
+									<option value="Concho">Concho</option>
+									<option value="Crockett">Crockett</option>
+									<option value="Irion">Irion</option>
+									<option value="Kimble">Kimble</option>
+									<option value="Mason">Mason</option>
+									<option value="McCulloch">McCulloch</option>
+									<option value="Menard">Menard</option>
+									<option value="Reagan">Reagan</option>
+									<option value="Schleicher">Schleicher</option>
+									<option value="Sterling">Sterling</option>
+									<option value="Sutton">Sutton</option>
+									<option value="Tom Green">Tom Green</option>
+									<option value="Bosque">Bosque</option>
+									<option value="Falls">Falls</option>
+									<option value="Freestone">Freestone</option>
+									<option value="Hill">Hill</option>
+									<option value="Limestone">Limestone</option>
+									<option value="McLennan">McLennan</option>
+									<option value="Bastrop">Bastrop</option>
+									<option value="Blanco">Blanco</option>
+									<option value="Burnet">Burnet</option>
+									<option value="Caldwell">Caldwell</option>
+									<option value="Fayette">Fayette</option>
+									<option value="Hays">Hays</option>
+									<option value="Lee">Lee</option>
+									<option value="Llano">Llano</option>
+									<option value="Travis">Travis</option>
+									<option value="Williamson">Williamson</option>
+									<option value="Brazos">Brazos</option>
+									<option value="Burleson">Burleson</option>
+									<option value="Grimes">Grimes</option>
+									<option value="Leon">Leon</option>
+									<option value="Madison">Madison</option>
+									<option value="Robertson">Robertson</option>
+									<option value="Washington">Washington</option>
+									<option value="Angelina">Angelina</option>
+									<option value="Houston">Houston</option>
+									<option value="Jasper">Jasper</option>
+									<option value="Nacogdoches">Nacogdoches</option>
+									<option value="Newton">Newton</option>
+									<option value="Polk">Polk</option>
+									<option value="Sabine">Sabine</option>
+									<option value="San Augustine">San Augustine</option>
+									<option value="San Jacinto">San Jacinto</option>
+									<option value="Shelby">Shelby</option>
+									<option value="Trinity">Trinity</option>
+									<option value="Tyler">Tyler</option>
+									<option value="Hardin">Hardin</option>
+									<option value="Jefferson">Jefferson</option>
+									<option value="Orange">Orange</option>
+									<option value="Austin">Austin</option>
+									<option value="Brazoria">Brazoria</option>
+									<option value="Chambers">Chambers</option>
+									<option value="Colorado">Colorado</option>
+									<option value="Fort Bend">Fort Bend</option>
+									<option value="Galveston">Galveston</option>
+									<option value="Harris">Harris</option>
+									<option value="Liberty">Liberty</option>
+									<option value="Matagorda">Matagorda</option>
+									<option value="Montgomery">Montgomery</option>
+									<option value="Walker">Walker</option>
+									<option value="Waller">Waller</option>
+									<option value="Wharton">Wharton</option>
+									<option value="Calhoun">Calhoun</option>
+									<option value="Dewitt">Dewitt</option>
+									<option value="Goliad">Goliad</option>
+									<option value="Gonzales">Gonzales</option>
+									<option value="Jackson">Jackson</option>
+									<option value="Lavaca">Lavaca</option>
+									<option value="Victoria">Victoria</option>
+									<option value="Atascosa">Atascosa</option>
+									<option value="Bandera">Bandera</option>
+									<option value="Bexar">Bexar</option>
+									<option value="Comal">Comal</option>
+									<option value="Frio">Frio</option>
+									<option value="Gillespie">Gillespie</option>
+									<option value="Guadalupe">Guadalupe</option>
+									<option value="Karnes">Karnes</option>
+									<option value="Kendall">Kendall</option>
+									<option value="Kerr">Kerr</option>
+									<option value="Medina">Medina</option>
+									<option value="Wilson">Wilson</option>
+									<option value="Jim Hogg">Jim Hogg</option>
+									<option value="Starr">Starr</option>
+									<option value="Webb">Webb</option>
+									<option value="Zapata">Zapata</option>
+									<option value="Aransas">Aransas</option>
+									<option value="Bee">Bee</option>
+									<option value="Brooks">Brooks</option>
+									<option value="Duval">Duval</option>
+									<option value="Jim Wells">Jim Wells</option>
+									<option value="Kenedy">Kenedy</option>
+									<option value="Kleberg">Kleberg</option>
+									<option value="Live Oak">Live Oak</option>
+									<option value="McMullen">McMullen</option>
+									<option value="Nueces">Nueces</option>
+									<option value="Refugio">Refugio</option>
+									<option value="San Patricio">San Patricio</option>
+									<option value="Cameron">Cameron</option>
+									<option value="Hidalgo">Hidalgo</option>
+									<option value="Willacy">Willacy</option>
+									<option value="Cooke">Cooke</option>
+									<option value="Fannin">Fannin</option>
+									<option value="Bell">Bell</option>
+									<option value="Coryell">Coryell</option>
+									<option value="Hamilton">Hamilton</option>
+									<option value="Lampasas">Lampasas</option>
+									<option value="Milam">Milam</option>
+									<option value="Mills">Mills</option>
+									<option value="San Saba">San Saba</option>
+									<option value="Grayson">Grayson</option>
+									<option value="Dimmit">Dimmit</option>
+									<option value="Edwards">Edwards</option>
+									<option value="Kinney">Kinney</option>
+									<option value="La Salle">La Salle</option>
+									<option value="Maverick">Maverick</option>
+									<option value="Real">Real</option>
+									<option value="Uvalde">Uvalde</option>
+									<option value="Val Verde">Val Verde</option>
+									<option value="Zavala">Zavala</option>
+              					</select>
+              				</div>
+              			</div>
+						<div class="form-group">
+                			<label for="asset_description" class="col-sm-2 control-label">Description:</label>
+                			<div class="col-sm-10" style="margin-bottom: 8px;">
+                  				<textarea style="text-align: left;" class="form-control" id="description" name="description" placeholder="Description" row="4" />
+                  			</div>
+                  		</div>
+						<div class="form-group">
+                			<label for="asset_description" class="col-sm-2 control-label">File Attachment(s):</label>
+                			<div class="col-sm-10" style="margin-bottom: 8px;">
+                				<input type="file" name="fileAttachment1" id="fileAttachment1" class="form-control" /><br/>
+                				<input type="file" name="fileAttachment2" id="fileAttachment2" class="form-control" /><br/>
+                				<input type="file" name="fileAttachment3" id="fileAttachment3" class="form-control" />        				
+                  			</div>
+                  		</div>
+						<div class="form-group hidden" id="advancedOptionsDIV" style="margin-bottom: 8px;">
+                			<h4 class="text-muted">Advanced Options</h4><hr/>
+                			<label id="archiveRecord" class="col-sm-2 control-label">
+                			<input type="checkbox" id="archiveRecord" name="archiveRecord" value="Yes" /><space/>Archive
+              				</label>
+                			<label id="deleteRecord" class="col-sm-2 control-label">
+                			<input type="checkbox" id="deleteRecord" name="deleteRecord" value="Yes" /><space/>Delete
+              				</label>              				
+              			</div>
+						<!--startOf: bottom save and cancel buttons-->
+						<div class="span4 pull-right" style="text-align: right;">
+							<button type="button" class="btn btn-success" id="saveBttnBottom" onclick="eventsApp.saveBttnClick();">
+								<i class="fa fa-check"></i> Save
+							</button><space/>
+              				<button type="button" class="btn btn-danger" id="cancelBttnTop" onclick="eventsApp.returnBttnClick();">
+              					<i class="fa fa-times"></i> Cancel
+              				</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

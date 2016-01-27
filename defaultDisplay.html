@@ -1,0 +1,189 @@
+<html version="6" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<head>
+<title>Texas Events II</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--startOf: css-->
+<link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/sb-admin.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--startOf: js-->
+<script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/bootstrap.min.js"></script>
+<!--startOf: custom js-->
+<script type="text/javascript">
+//startOf: declaring global variables
+var loopAllInputs=document.getElementsByTagName('input');
+
+//startOf: events app method
+var eventsApp={
+	init: function() {
+		for(var i=0; i &lt; loopAllInputs.length; i++) {
+      		if($(loopAllInputs[i]).val()=='Search' || $(loopAllInputs[i]).val()=='Clear Search') {
+        		$(loopAllInputs[i]).addClass('btn btn-info');
+      		}
+      		if(loopAllInputs[i].id.search('searchfield')&gt;=0){$(loopAllInputs[i]).addClass('form-control').prop('placeholder', 'Search...');;}
+    	}
+	}
+};
+
+$(document).ready(function(){eventsApp.init();});
+</script>
+
+
+</head>
+<body>
+	<div id="page-wrapper">
+		<div class="container-fluid">
+			<!--startOf: hidden fields-->
+			<div class="hidden"></div>
+			<!--startOf: navigation bar-->
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        		<div class="navbar-header">
+          			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            			<span class="sr-only">Toggle navigation</span>
+            			<span class="icon-bar"></span>
+            			<span class="icon-bar"></span>
+            			<span class="icon-bar"></span>
+          			</button>
+          			<a href="#" class="navbar-brand">Texas Events</a>
+        		</div>
+        		<div class="collapse navbar-collapse navbar-ex1-collapse">
+          			<ul class="nav navbar-nav">
+            			<li class="dropdown">
+              				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                				<i class="fa fa-list-alt fa-fw"></i> Actions <b class="caret"></b>
+                			</a>
+              				<ul class="dropdown-menu">
+                				<li>
+                					<viewlink name="defaultInput" id="defaultInputLink">
+                						<i class="fa fa-plus fa-fw"></i> Add Record
+                					</viewlink>
+                				</li>              					
+                				<li>
+                					<pdflink>
+                						<i class="fa fa-file-pdf-o fa-fw"></i> Print PDF
+                					</pdflink>
+                				</li>
+                			</ul>
+                		</li>
+                	</ul>
+                </div>
+            </nav>
+            <!--startOf: page heading-->
+            <div class="row">
+                <div class="col-lg-12">
+                	<h1 class="page-header">
+						<span>Texas Events</span><space/><space/>
+						<small><incidentname /></small>
+						<div class="span4 pull-right form-inline" style="text-align: right; font-size: 10pt;">
+					    	<search field="eventType" exact="false" range="false" rangetext="false" showcalendar="false" showclear="true">
+								<field name="accountUsername" />
+								<field name="accountPosition" />
+								<field name="dateTime" />
+								<field name="dateTimeUpdate" />
+								<field name="location" />
+								<field name="county" />
+								<field name="description" />
+								<field name="fileAttachment1" />
+								<field name="fileAttachment2" />
+								<field name="fileAttachment3" />
+								<field name="archiveRecord" />
+								<field name="deleteRecord" />
+					        </search><space />
+					   		<clearsearchbutton />
+						</div>
+                	</h1>
+                	<ol class="breadcrumb">
+            			<li class="active">
+              				<i class="fa fa-home" /> Home   
+                  		</li>
+                  	</ol>
+               	</div>
+            </div>
+         	<!--startOf: main content-->
+			<div class="row">
+				<div class="col-lg-12">
+					<eocrepeatallrecords rowcount="30">
+						<if test="1=0">
+							<eocfield name="accountUsername" />
+							<eocfield name="accountPosition" />
+							<eocfield name="eventType" />
+							<eocfield name="dateTime" />
+							<eocfield name="dateTimeUpdate" />
+							<eocfield name="location" />
+							<eocfield name="county" />
+							<eocfield name="description" />
+							<eocfield name="fileAttachment1" />
+							<eocfield name="fileAttachment2" />
+							<eocfield name="fileAttachment3" />
+							<eocfield name="archiveRecord" />
+							<eocfield name="deleteRecord" />
+						</if>
+						<div class="panel panel-default">
+	  						<div class="panel-heading">
+	  							<div class="row">
+	  								<div class="col-lg-6" align="left">
+	    								<if test="(contains(//data/@positionname, current()/@accountPosition))">
+	    									<viewlink type="button" name="defaultInput" class="btn btn-default btn-sm">
+	    										<i class="fa fa-pencil"></i> Edit
+	    									</viewlink>
+	    								</if>
+	    							</div>
+	    							<div class="col-lg-6" align="right">
+	    								<b><value-of select="@location" />, <value-of select="@county" /></b>
+	    							</div>	
+	  							</div>							
+	  						</div>
+	  						<div class="panel-body">
+	  							<div class="row">
+	  								<div class="col-lg-4">
+			  							<dl class="dl-horizontal">
+		            						<dt>Position:</dt>
+		            						<dd><value-of select="@accountPosition" /></dd>
+		            						<dt>Name:</dt>
+		            						<dd><value-of select="@accountUsername" /></dd>
+		            						<dt>Date/Time:</dt>
+		            						<dd><value-of select="@dateTime" /></dd>
+		            						<if test="@dateTimeUpdate!=''">
+		            							<dt>Last Updated:</dt>
+		            							<dd>
+		            								<font color="red"><value-of select="@dateTime" /></font>
+		            							</dd>
+		            						</if>
+		            						<dt>Event Type:</dt>
+		            						<dd><value-of select="@eventType" /></dd>
+		            					</dl>	  									
+	  								</div>
+	  								<div class="col-lg-8">
+	  									<b><value-of select="@description" /></b>	
+	  								</div>
+	  							</div>
+	  							<div class="row">
+	  								<div class="col-lg-4" align="left">
+	  									<if test="@archiveRecord='Yes'">
+	  										<font color="red">
+	  											Record has been archived
+	  										</font>
+	  									</if>
+	  									<if test="@deleteRecord='Yes'">
+	  										<font color="red">
+	  											Record has been deleted
+	  										</font>
+	  									</if>	  									
+	  								</div>
+	  								<div class="col-lg-8" align="right">
+	  									<value-of select="fileAttachment1" />
+	  									<value-of select="fileAttachment2" />
+	  									<value-of select="fileAttachment3" />
+	  								</div>
+	  							</div>
+	  						</div>
+						</div>
+					</eocrepeatallrecords>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
