@@ -132,6 +132,29 @@ $(document).ready(function(){eventsApp.init();});
 				<div class="row">
 					<div class="col-lg-12">
               			<div class="form-group">
+                			<label for="esf" class="col-sm-2 control-label">ESF:</label>
+                			<div class="col-sm-10" style="margin-bottom: 8px;">
+                  				<select id="esf" name="esf" class="form-control">
+                  					<option></option>
+                  					<option value="ESF #1 - Transportation">ESF #1 - Transportation</option>
+                  					<option value="ESF #2 - Communications">ESF #2 - Communications</option>
+                  					<option value="ESF #3 - Public Works and Engineering">ESF #3 - Public Works and Engineering</option>
+                  					<option value="ESF #4 - Firefighting">ESF #4 - Firefighting</option>
+                  					<option value="ESF #5 - Emergency Management">ESF #5 - Emergency Management</option>
+                  					<option value="ESF #6 - Mass Care, Emergency Assistance, Housing and Human Services">ESF #6 - Mass Care, Emergency Assistance, Housing and Human Services</option>
+                  					<option value="ESF #7 - Logistics Management and Resource Support">ESF #7 - Logistics Management and Resource Support</option>
+                  					<option value="ESF #8 - Public Health and Medical Services">ESF #8 - Public Health and Medical Services</option>
+                  					<option value="ESF #9 - Search and Rescue">ESF #9 - Search and Rescue</option>
+                  					<option value="ESF #10 - Oil and Hazardous Materials Response">ESF #10 - Oil and Hazardous Materials Response</option>
+                  					<option value="ESF #11 - Agriculture and Natural Resources">ESF #11 - Agriculture and Natural Resources</option>
+                  					<option value="ESF #12 - Energy">ESF #12 - Energy</option>
+                  					<option value="ESF #13 - Public Safety and Security">ESF #13 - Public Safety and Security</option>
+                  					<option value="ESF #14 - Long-Term Community Recovery">ESF #14 - Long-Term Community Recovery</option>
+                  					<option value="ESF #15 - External Affairs">ESF #15 - External Affairs</option>
+                  				</select>
+                			</div>
+              			</div>
+              			<div class="form-group">
                 			<label for="eventType" class="col-sm-2 control-label">Event Type:</label>
                 			<div class="col-sm-10" style="margin-bottom: 8px;">
 								<select id="eventType" name="eventType" class="form-control">
@@ -180,7 +203,7 @@ $(document).ready(function(){eventsApp.init();});
               			<div class="form-group">
                 			<label for="location" class="col-sm-2 control-label">Location:</label>
                 			<div class="col-sm-10" style="margin-bottom: 8px;">
-                  				<input type="text" id="location" name="location" class="form-control" />
+                  				<input type="text" id="location" name="location" class="form-control" placerholder="Location" />
                 			</div>
               			</div>
               			<div class="form-group">
