@@ -1,0 +1,116 @@
+<html version="6" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<head>
+<title>Texas Events II</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--startOf: css-->
+<link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/sb-admin.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--startOf: js-->
+<script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<eocrepeatallrecords rowcount="30">
+		<if test="1=0">
+			<eocfield name="accountUsername" />
+			<eocfield name="accountPosition" />
+			<eocfield name="eventType" />
+			<eocfield name="dateTime" />
+			<eocfield name="dateTimeUpdate" />
+			<eocfield name="location" />
+			<eocfield name="county" />
+			<eocfield name="description" />
+			<eocfield name="fileAttachment1" />
+			<eocfield name="fileAttachment2" />
+			<eocfield name="fileAttachment3" />
+			<eocfield name="archiveRecord" />
+			<eocfield name="deleteRecord" />
+			<eocfield name="incidentNamePlaceHolder" />
+			<eocfield name="eventScenario" />
+			<eocfield name="ddcNo" />
+			<eocfield name="ESF1" />
+			<eocfield name="ESF2" />
+			<eocfield name="ESF3" />
+			<eocfield name="ESF4" />
+			<eocfield name="ESF5" />
+			<eocfield name="ESF6" />
+			<eocfield name="ESF7" />
+			<eocfield name="ESF8" />
+			<eocfield name="ESF9" />
+			<eocfield name="ESF10" />
+			<eocfield name="ESF11" />
+			<eocfield name="ESF12" />
+			<eocfield name="ESF13" />
+			<eocfield name="ESF14" />
+			<eocfield name="ESF15" />
+		</if>
+		<div class="header clearfix" style="padding-left:15px;padding-right:15px;">
+			<!--startOf: hidden fields-->
+			<div class="hidden">
+				<incidentname />
+			</div>
+	    	<nav>
+	        	<ul class="nav nav-pills pull-right">
+	            	<li role="presentation">
+	               		<returnbutton class="btn btn-primary" id="returnBttn">Return To List</returnbutton>
+	              	</li>
+	              	<li role="presentation">
+	               		<button id="printBttn" class="btn btn-primary" onclick="window.print();">Print/PDF</button>
+	              	</li>
+	            </ul>
+	            <h3 class="text-muted">Texas Events
+		        	<choose>
+		            	<when test="@eventScenario='Live'">
+		            		<font color="red">(Live)</font>
+		            	</when>
+		            	<otherwise>
+		            		<font color="blue">(Training/Exercise)</font>
+		            	</otherwise>
+		            </choose>
+	            </h3>
+	        </nav>
+	    </div><hr/>
+    <div class="row-marketing" style="padding-left:15px;padding-right:15px;">
+    	<h4 class="text-muted">Details</h4>
+    	<dl class="dl-horizontal">
+			<dt>Position:</dt>
+		    <dd><value-of select="@accountPosition" /></dd>
+		    <dt>Name:</dt>
+		    <dd><value-of select="@accountUsername" /></dd>
+		    <dt>Date/Time:</dt>
+		    <dd><value-of select="@dateTime" /></dd>
+		    <if test="@dateTimeUpdate!=''">
+		    	<dt>Last Updated:</dt>
+		    	<dd>
+		    		<font color="red"><value-of select="@dateTime" /></font>
+		   	 	</dd>
+		    </if>
+			<dt>ESF Type(s):</dt>
+			<dd>
+				<if test="@ESF1!=''"><u><value-of select="@ESF1" /></u></if>
+				<if test="@ESF2!=''"><space /><u><value-of select="@ESF2" /></u></if>
+				<if test="@ESF3!=''"><space /><u><value-of select="@ESF3" /></u></if>
+				<if test="@ESF4!=''"><space /><u><value-of select="@ESF4" /></u></if>
+				<if test="@ESF5!=''"><space /><u><value-of select="@ESF5" /></u></if>
+				<if test="@ESF6!=''"><space /><u><value-of select="@ESF6" /></u></if>
+				<if test="@ESF7!=''"><space /><u><value-of select="@ESF7" /></u></if>
+				<if test="@ESF8!=''"><space /><u><value-of select="@ESF8" /></u></if>
+				<if test="@ESF9!=''"><space /><u><value-of select="@ESF9" /></u></if>
+				<if test="@ESF10!=''"><space /><u><value-of select="@ESF10" /></u></if>
+				<if test="@ESF11!=''"><space /><u><value-of select="@ESF11" /></u></if>
+				<if test="@ESF12!=''"><space /><u><value-of select="@ESF12" /></u></if>
+				<if test="@ESF13!=''"><space /><u><value-of select="@ESF13" /></u></if>
+				<if test="@ESF14!=''"><space /><u><value-of select="@ESF14" /></u></if>
+				<if test="@ESF15!=''"><space /><u><value-of select="@ESF15" /></u></if>
+			</dd>
+		    <dt>Event Type:</dt>
+		    <dd><value-of select="@eventType" /></dd>
+		    <dt>Description:</dt>
+		    <dd><value-of select="@description" /></dd>
+		</dl>
+   	</div>
+	</eocrepeatallrecords>
+</body>
+
+</html>

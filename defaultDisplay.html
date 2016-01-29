@@ -6,45 +6,195 @@
 <link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <link href="https://olympus.soc.texas.gov/files/CDN/bootstrap/css/sb-admin.css" rel="stylesheet" />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!--startOf: custom-->
+<style type="text/css">
+.dropdownFixedHeight{height: 350px;overflow: auto;}
+</style>
 <!--startOf: js-->
 <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/jquery.js"></script>
 <script type="text/javascript" src="https://olympus.soc.texas.gov/files/CDN/bootstrap/js/bootstrap.min.js"></script>
 <!--startOf: custom js-->
 <script type="text/javascript">
-//startOf: declaring global variables
-var loopAllInputs=document.getElementsByTagName('input');
-
 //startOf: events app method
 var eventsApp={
 	filterButtonClick: function(arg1){$(arg1).click();},
-	init: function() {
+	styleSearchField: function() {
+		var loopAllInputs=document.getElementsByTagName('input');
 		for(var i=0; i &lt; loopAllInputs.length; i++) {
-      		if($(loopAllInputs[i]).val()=='Search' || $(loopAllInputs[i]).val()=='Clear Search') {
-        		$(loopAllInputs[i]).addClass('btn btn-info');
-      		}
-      		if(loopAllInputs[i].id.search('searchfield')&gt;=0){$(loopAllInputs[i]).addClass('form-control').prop('placeholder', 'Search...');;}
+      		if($(loopAllInputs[i]).val()=='Search' || $(loopAllInputs[i]).val()=='Clear Search'){$(loopAllInputs[i]).addClass('btn btn-default');}
+      		if(loopAllInputs[i].id.search('searchfield')&gt;=0){$(loopAllInputs[i]).addClass('form-control').prop('placeholder', 'Search...');}
     	}
+	},	
+	setFilterMenuLabel: function(arg2, arg3, arg4) {
+		if($(arg2).html()=='on'){$(arg3).html('<i class="fa fa-filter fa-fw"></i> '+$(arg4).html()+' <b class="caret"></b>');}
+	},
+	setFilterOptionActive: function(arg5, arg6) {
+		if($(arg5).html()=='on'){$(arg6).addClass('active');}		
+	},
+	init: function() {
+		this.styleSearchField();
+    	this.setFilterMenuLabel('#esfAllFilterBttn','#esfMenuLink','#esfAllFilterLink');
+		this.setFilterMenuLabel('#esf1FilterBttn','#esfMenuLink','#esf1FilterLink');
+		this.setFilterMenuLabel('#esf2FilterBttn','#esfMenuLink','#esf2FilterLink');
+		this.setFilterMenuLabel('#esf3FilterBttn','#esfMenuLink','#esf3FilterLink');
+		this.setFilterMenuLabel('#esf4FilterBttn','#esfMenuLink','#esf4FilterLink');
+		this.setFilterMenuLabel('#esf5FilterBttn','#esfMenuLink','#esf5FilterLink');
+		this.setFilterMenuLabel('#esf6FilterBttn','#esfMenuLink','#esf6FilterLink');
+		this.setFilterMenuLabel('#esf7FilterBttn','#esfMenuLink','#esf7FilterLink');
+		this.setFilterMenuLabel('#esf8FilterBttn','#esfMenuLink','#esf8FilterLink');		
+		this.setFilterMenuLabel('#esf9FilterBttn','#esfMenuLink','#esf9FilterLink');
+		this.setFilterMenuLabel('#esf10FilterBttn','#esfMenuLink','#esf10FilterLink');
+		this.setFilterMenuLabel('#esf11FilterBttn','#esfMenuLink','#esf11FilterLink');
+		this.setFilterMenuLabel('#esf12FilterBttn','#esfMenuLink','#esf12FilterLink');
+		this.setFilterMenuLabel('#esf13FilterBttn','#esfMenuLink','#esf13FilterLink');
+		this.setFilterMenuLabel('#esf14FilterBttn','#esfMenuLink','#esf14FilterLink');		
+		this.setFilterMenuLabel('#esf15FilterBttn','#esfMenuLink','#esf15FilterLink');
+		this.setFilterMenuLabel('#defaultFilterBttn','#archivedDeletedMenuLink','#defaultFilterLink');
+		this.setFilterMenuLabel('#archivedFilterBttn','#archivedDeletedMenuLink','#archivedFilterLink');
+		this.setFilterMenuLabel('#deletedFilterBttn','#archivedDeletedMenuLink','#deletedFilterLink');
+		this.setFilterMenuLabel('#ddcAllFilterBttn','#ddcMenuLink','#ddcAllFilterLink');
+		this.setFilterMenuLabel('#ddc01FilterBttn','#ddcMenuLink','#ddc01FilterLink');
+		this.setFilterMenuLabel('#ddc02FilterBttn','#ddcMenuLink','#ddc02FilterLink');
+		this.setFilterMenuLabel('#ddc03FilterBttn','#ddcMenuLink','#ddc03FilterLink');
+		this.setFilterMenuLabel('#ddc04AFilterBttn','#ddcMenuLink','#ddc04AFilterLink');
+		this.setFilterMenuLabel('#ddc05FilterBttn','#ddcMenuLink','#ddc05FilterLink');
+		this.setFilterMenuLabel('#ddc06FilterBttn','#ddcMenuLink','#ddc06FilterLink');
+		this.setFilterMenuLabel('#ddc07FilterBttn','#ddcMenuLink','#ddc07FilterLink');
+		this.setFilterMenuLabel('#ddc08FilterBttn','#ddcMenuLink','#ddc08FilterLink');
+		this.setFilterMenuLabel('#ddc09AFilterBttn','#ddcMenuLink','#ddc09AFilterLink');
+		this.setFilterMenuLabel('#ddc10FilterBttn','#ddcMenuLink','#ddc10FilterLink');
+		this.setFilterMenuLabel('#ddc11FilterBttn','#ddcMenuLink','#ddc11FilterLink');
+		this.setFilterMenuLabel('#ddc12FilterBttn','#ddcMenuLink','#ddc12FilterLink');
+		this.setFilterMenuLabel('#ddc13FilterBttn','#ddcMenuLink','#ddc13FilterLink');
+		this.setFilterMenuLabel('#ddc14FilterBttn','#ddcMenuLink','#ddc14FilterLink');
+		this.setFilterMenuLabel('#ddc15FilterBttn','#ddcMenuLink','#ddc15FilterLink');
+		this.setFilterMenuLabel('#ddc16AFilterBttn','#ddcMenuLink','#ddc16AFilterLink');
+		this.setFilterMenuLabel('#ddc17FilterBttn','#ddcMenuLink','#ddc17FilterLink');
+		this.setFilterMenuLabel('#ddc18AFilterBttn','#ddcMenuLink','#ddc18AFilterLink');
+		this.setFilterMenuLabel('#ddc19FilterBttn','#ddcMenuLink','#ddc19FilterLink');
+		this.setFilterMenuLabel('#ddc20FilterBttn','#ddcMenuLink','#ddc20FilterLink');
+		this.setFilterMenuLabel('#ddc21FilterBttn','#ddcMenuLink','#ddc21FilterLink');
+		this.setFilterMenuLabel('#ddc22FilterBttn','#ddcMenuLink','#ddc22FilterLink');
+		this.setFilterMenuLabel('#ddc23FilterBttn','#ddcMenuLink','#ddc23FilterLink');
+		this.setFilterMenuLabel('#ddc24FilterBttn','#ddcMenuLink','#ddc24FilterLink');
+		this.setFilterOptionActive('#ddcAllFilterBttn','#ddcAllLi');
+		this.setFilterOptionActive('#liveFilterBttn','#liveLi');
+		this.setFilterOptionActive('#trainingOrExerciseFilterBttn','#trainingOrExerciseLi');
+		this.setFilterOptionActive('#defaultFilterBttn','#inboxLi');
+		this.setFilterOptionActive('#archivedFilterBttn','#archivedLi');
+		this.setFilterOptionActive('#deletedFilterBttn','#deletedLi');
+		this.setFilterOptionActive('#esfAllFilterBttn','#esfAllLi');
+		this.setFilterOptionActive('#esf1FilterBttn','#esf1Li');
+		this.setFilterOptionActive('#esf2FilterBttn','#esf2Li');
+		this.setFilterOptionActive('#esf3FilterBttn','#esf3Li');
+		this.setFilterOptionActive('#esf4FilterBttn','#esf4Li');
+		this.setFilterOptionActive('#esf5FilterBttn','#esf5Li');
+		this.setFilterOptionActive('#esf6FilterBttn','#esf6Li');
+		this.setFilterOptionActive('#esf7FilterBttn','#esf7Li');
+		this.setFilterOptionActive('#esf8FilterBttn','#esf8Li');
+		this.setFilterOptionActive('#esf9FilterBttn','#esf9Li');
+		this.setFilterOptionActive('#esf10FilterBttn','#esf10Li');
+		this.setFilterOptionActive('#esf11FilterBttn','#esf11Li');
+		this.setFilterOptionActive('#esf12FilterBttn','#esf12Li');
+		this.setFilterOptionActive('#esf13FilterBttn','#esf13Li');
+		this.setFilterOptionActive('#esf14FilterBttn','#esf14Li');
+		this.setFilterOptionActive('#esf15FilterBttn','#esf15Li');
+		this.setFilterOptionActive('#ddc01FilterBttn','#ddc01Li');
+		this.setFilterOptionActive('#ddc02FilterBttn','#ddc02Li');
+		this.setFilterOptionActive('#ddc03FilterBttn','#ddc03Li');
+		this.setFilterOptionActive('#ddc04AFilterBttn','#ddc04ALi');
+		this.setFilterOptionActive('#ddc05FilterBttn','#ddc05Li');
+		this.setFilterOptionActive('#ddc06FilterBttn','#ddc06Li');
+		this.setFilterOptionActive('#ddc07FilterBttn','#ddc07Li');
+		this.setFilterOptionActive('#ddc08FilterBttn','#ddc08Li');
+		this.setFilterOptionActive('#ddc09AFilterBttn','#ddc09ALi');
+		this.setFilterOptionActive('#ddc10FilterBttn','#ddc10Li');
+		this.setFilterOptionActive('#ddc11FilterBttn','#ddc11Li');
+		this.setFilterOptionActive('#ddc12FilterBttn','#ddc12Li');
+		this.setFilterOptionActive('#ddc13FilterBttn','#ddc13Li');
+		this.setFilterOptionActive('#ddc14FilterBttn','#ddc14Li');
+		this.setFilterOptionActive('#ddc15FilterBttn','#ddc15Li');
+		this.setFilterOptionActive('#ddc16AFilterBttn','#ddc16ALi');
+		this.setFilterOptionActive('#ddc17FilterBttn','#ddc17Li');
+		this.setFilterOptionActive('#ddc18AFilterBttn','#ddc18ALi');
+		this.setFilterOptionActive('#ddc19FilterBttn','#ddc19Li');
+		this.setFilterOptionActive('#ddc20FilterBttn','#ddc20Li');
+		this.setFilterOptionActive('#ddc21FilterBttn','#ddc21Li');
+		this.setFilterOptionActive('#ddc22FilterBttn','#ddc22Li');
+		this.setFilterOptionActive('#ddc23FilterBttn','#ddc23Li');
+		this.setFilterOptionActive('#ddc24FilterBttn','#ddc24Li');
+		if($('#liveFilterBttn').html()=='on') {
+    		window.parent.liveTrainPlaceHolder='Live';
+    		$('#defaultInputBttn').removeClass('btn-primary').addClass('btn-danger');
+    		$('#eventScenarioMenuLink').html('<i class="fa fa-filter fa-fw"></i> Live <b class="caret"></b>');
+    	}
+    	if($('#trainingOrExerciseFilterBttn').html()=='on') {
+    		window.parent.liveTrainPlaceHolder='TrainingOrExercise';
+    		$('#defaultInputBttn').removeClass('btn-danger').addClass('btn-primary');    		
+    		$('#eventScenarioMenuLink').html('<i class="fa fa-filter fa-fw"></i> Training/Exercise <b class="caret"></b>');
+    	}    	
 	}
 };
 
 $(document).ready(function(){eventsApp.init();});
 </script>
-
-
 </head>
 <body>
 	<div id="page-wrapper">
 		<div class="container-fluid">
 			<!--startOf: hidden fields-->
 			<div class="hidden">
-				<filterbutton name="DDC01" id="ddc01FilterBttn" group="ddcFilterGroup">
-                	<on>on</on>
-                  	<off>off</off>
-                </filterbutton>
-				<filterbutton name="DDC02" id="ddc02FilterBttn" group="ddcFilterGroup">
-                	<on>on</on>
-                  	<off>off</off>
-                </filterbutton>
+				<grouplist />
+				<incidentname />
+				<!--startOf: live/TrainingOrExercise filters-->
+				<filterbutton name="Live" id="liveFilterBttn" group="livetrainingOrExerciseFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="TrainingOrExercise" id="trainingOrExerciseFilterBttn" group="livetrainingOrExerciseFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<!--startOf: archived/deleted filters-->
+				<filterbutton name="Default" id="defaultFilterBttn" group="archiveDeletedFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="Archived" id="archivedFilterBttn" group="archiveDeletedFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="Deleted" id="deletedFilterBttn" group="archiveDeletedFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<!--startOf: ESF filters-->
+				<filterbutton name="Default ESF" id="esfAllFilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="ESF1" id="esf1FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="ESF2" id="esf2FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>				
+				<filterbutton name="ESF3" id="esf3FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>	
+				<filterbutton name="ESF4" id="esf4FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>	
+				<filterbutton name="ESF5" id="esf5FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>	
+				<filterbutton name="ESF6" id="esf6FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>	
+				<filterbutton name="ESF7" id="esf7FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="ESF8" id="esf8FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>	
+				<filterbutton name="ESF9" id="esf9FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="ESF10" id="esf10FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="ESF11" id="esf11FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="ESF12" id="esf12FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="ESF13" id="esf13FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>				
+				<filterbutton name="ESF14" id="esf14FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="ESF15" id="esf15FilterBttn" group="esfFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="Default DDC" id="ddcAllFilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>				
+				<filterbutton name="DDC01" id="ddc01FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC02" id="ddc02FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC03" id="ddc03FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC04A" id="ddc04AFilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC05" id="ddc05FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC06" id="ddc06FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC07" id="ddc07FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC08" id="ddc08FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC09A" id="ddc09AFilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC10" id="ddc10FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC11" id="ddc11FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC12" id="ddc12FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC13" id="ddc13FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC14" id="ddc14FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC15" id="ddc015FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC16A" id="ddc16AFilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC17" id="ddc17FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC18A" id="ddc18AFilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC19" id="ddc19FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC20" id="ddc20FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC21" id="ddc21FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC22" id="ddc22FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC23" id="ddc23FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
+				<filterbutton name="DDC24" id="ddc24FilterBttn" group="ddcFilterGroup"><on>on</on><off>off</off></filterbutton>
 			</div>
 			<!--startOf: navigation bar-->
 			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -60,73 +210,216 @@ $(document).ready(function(){eventsApp.init();});
         		<div class="collapse navbar-collapse navbar-ex1-collapse">
           			<ul class="nav navbar-nav">
             			<li class="dropdown">
-              				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                				<i class="fa fa-list-alt fa-fw"></i> Actions <b class="caret"></b>
-                			</a>
+              				<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="eventScenarioMenuLink"></a>
               				<ul class="dropdown-menu">
-                				<li>
-                					<viewlink name="defaultInput" id="defaultInputLink">
-                						<i class="fa fa-plus fa-fw"></i> Add Record
-                					</viewlink>
+                				<li id="liveLi">
+                					<a href="#" id="liveFilterLink" onclick="eventsApp.filterButtonClick('#liveFilterBttn');">Live</a>
                 				</li>
-                				<li>
-                					<pdflink>
-                						<i class="fa fa-file-pdf-o fa-fw"></i> Print PDF
-                					</pdflink>
+                				<li id="trainingOrExerciseLi">
+                					<a href="#" id="trainingOrExerciseFilterLink" onclick="eventsApp.filterButtonClick('#trainingOrExerciseFilterBttn');">Training/Exercise</a>
                 				</li>
                 			</ul>
                 		</li>
                 	</ul>
           			<ul class="nav navbar-nav">
             			<li class="dropdown">
-              				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                				<i class="fa fa-list-alt fa-fw"></i> Filters <b class="caret"></b>
-                			</a>
+              				<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="archivedDeletedMenuLink"></a>
               				<ul class="dropdown-menu">
-                				<li>
-                					<a href="#" id="ddc01FilterLink" onclick="eventsApp.filterButtonClick('#ddc01FilterBttn');">
-                						<i class="fa fa-filter fa-fw"></i> DDC01
-                					</a>
+                				<li id="inboxLi">
+                					<a href="#" id="defaultFilterLink" onclick="eventsApp.filterButtonClick('#defaultFilterBttn');">Inbox</a>
                 				</li>
-                				<li>
-                					<a href="#" id="ddc02FilterLink" onclick="eventsApp.filterButtonClick('#ddc02FilterBttn');">
-                						<i class="fa fa-filter fa-fw"></i> DDC02
-                					</a>
+                				<li id="archivedLi">
+                					<a href="#" id="archivedFilterLink" onclick="eventsApp.filterButtonClick('#archivedFilterBttn');">Archived</a>
+                				</li>
+                				<li id="deletedLi">
+                					<a href="#" id="deletedFilterLink" onclick="eventsApp.filterButtonClick('#deletedFilterBttn');">Deleted</a>
+                				</li>                				
+                			</ul>
+                		</li>
+                	</ul>
+          			<ul class="nav navbar-nav">
+            			<li class="dropdown">
+              				<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="esfMenuLink"></a>
+              				<ul class="dropdown-menu dropdownFixedHeight">
+                				<li id="esfAllLi">
+                					<a href="#" id="esfAllFilterLink" onclick="eventsApp.filterButtonClick('#esfAllFilterBttn');">All</a>
+                				</li>
+                				<li id="esf1Li">
+                					<a href="#" id="esf1FilterLink" onclick="eventsApp.filterButtonClick('#esf1FilterBttn');">ESF #1 - Transportation</a>
+                				</li>
+                				<li id="esf2Li">
+                					<a href="#" id="esf2FilterLink" onclick="eventsApp.filterButtonClick('#esf2FilterBttn');">ESF #2 - Communications</a>
+                				</li>
+                				<li id="esf3Li">
+                					<a href="#" id="esf3FilterLink" onclick="eventsApp.filterButtonClick('#esf3FilterBttn');">ESF #3 - Public Works</a>
+                				</li>
+                				<li id="esf4Li">
+                					<a href="#" id="esf4FilterLink" onclick="eventsApp.filterButtonClick('#esf4FilterBttn');">ESF #4 - Firefighting</a>
+                				</li>
+                				<li id="esf5Li">
+                					<a href="#" id="esf5FilterLink" onclick="eventsApp.filterButtonClick('#esf5FilterBttn');">ESF #5 - Emergency Management</a>
+                				</li>
+                				<li id="esf6Li">
+                					<a href="#" id="esf6FilterLink" onclick="eventsApp.filterButtonClick('#esf6FilterBttn');">ESF #6 - Mass Care</a>
+                				</li>                				                				
+                				<li id="esf7Li">
+                					<a href="#" id="esf7FilterLink" onclick="eventsApp.filterButtonClick('#esf7FilterBttn');">ESF #7 - Logistics</a>
+                				</li>
+                				<li id="esf8Li">
+                					<a href="#" id="esf8FilterLink" onclick="eventsApp.filterButtonClick('#esf8FilterBttn');">ESF #8 - Public Health and Medical</a>
+                				</li>
+                				<li id="esf9Li">
+                					<a href="#" id="esf9FilterLink" onclick="eventsApp.filterButtonClick('#esf9FilterBttn');">ESF #9 - Search and Rescue</a>
+                				</li>
+                				<li id="esf10Li">
+                					<a href="#" id="esf10FilterLink" onclick="eventsApp.filterButtonClick('#esf10FilterBttn');">ESF #10 - HAZMAT</a>
+                				</li>
+                				<li id="esf11Li">
+                					<a href="#" id="esf11FilterLink" onclick="eventsApp.filterButtonClick('#esf11FilterBttn');">ESF #11 - Agriculture and Natural Resources</a>
+                				</li>
+                				<li id="esf12Li">
+                					<a href="#" id="esf12FilterLink" onclick="eventsApp.filterButtonClick('#esf12FilterBttn');">ESF #12 - Energy</a>
+                				</li>
+                				<li id="esf13Li">
+                					<a href="#" id="esf13FilterLink" onclick="eventsApp.filterButtonClick('#esf13FilterBttn');">ESF #13 - Public Safety</a>
+                				</li>
+                				<li id="esf14Li">
+                					<a href="#" id="esf14FilterLink" onclick="eventsApp.filterButtonClick('#esf14FilterBttn');">ESF #14 - Recovery</a>
+                				</li>
+                				<li id="esf15Li">
+                					<a href="#" id="esf15FilterLink" onclick="eventsApp.filterButtonClick('#esf15FilterBttn');">ESF #15 - External Affairs</a>
                 				</li>
                 			</ul>
                 		</li>
                 	</ul>
+          			<ul class="nav navbar-nav">
+            			<li class="dropdown">
+              				<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="ddcMenuLink"></a>
+              				<ul class="dropdown-menu dropdownFixedHeight">
+                				<li id="ddcAllLi">
+                					<a href="#" id="ddcAllFilterLink" onclick="eventsApp.filterButtonClick('#ddcAllFilterBttn');">All DDCs</a>
+                				</li> 
+                				<li id="ddc01Li">
+                					<a href="#" id="ddc01FilterLink" onclick="eventsApp.filterButtonClick('#ddc01FilterBttn');">DDC01</a>
+                				</li>
+                				<li id="ddc02Li">
+                					<a href="#" id="ddc02FilterLink" onclick="eventsApp.filterButtonClick('#ddc02FilterBttn');">DDC02</a>
+                				</li>
+                				<li id="ddc03Li">
+                					<a href="#" id="ddc03FilterLink" onclick="eventsApp.filterButtonClick('#ddc03FilterBttn');">DDC03</a>
+                				</li> 
+                				<li id="ddc04ALi">
+                					<a href="#" id="ddc04AFilterLink" onclick="eventsApp.filterButtonClick('#ddc04AFilterBttn');">DDC04A</a>
+                				</li>               				
+                				<li id="ddc05Li">
+                					<a href="#" id="ddc05FilterLink" onclick="eventsApp.filterButtonClick('#ddc05FilterBttn');">DDC05</a>
+                				</li>
+                				<li id="ddc06Li">
+                					<a href="#" id="ddc06FilterLink" onclick="eventsApp.filterButtonClick('#ddc06FilterBttn');">DDC06</a>
+                				</li>
+                				<li id="ddc07Li">
+                					<a href="#" id="ddc07FilterLink" onclick="eventsApp.filterButtonClick('#ddc07FilterBttn');">DDC07</a>
+                				</li> 
+                				<li id="ddc08Li">
+                					<a href="#" id="ddc08FilterLink" onclick="eventsApp.filterButtonClick('#ddc08FilterBttn');">DDC08</a>
+                				</li>               				
+                				<li id="ddc09ALi">
+                					<a href="#" id="ddc09AFilterLink" onclick="eventsApp.filterButtonClick('#ddc09AFilterBttn');">DDC09A</a>
+                				</li>
+                				<li id="ddc10Li">
+                					<a href="#" id="ddc10FilterLink" onclick="eventsApp.filterButtonClick('#ddc10FilterBttn');">DDC10</a>
+                				</li> 
+                				<li id="ddc11Li">
+                					<a href="#" id="ddc11FilterLink" onclick="eventsApp.filterButtonClick('#ddc11FilterBttn');">DDC11</a>
+                				</li>               				
+                				<li id="ddc12Li">
+                					<a href="#" id="ddc12FilterLink" onclick="eventsApp.filterButtonClick('#ddc12FilterBttn');">DDC12</a>
+                				</li>
+                				<li id="ddc13Li">
+                					<a href="#" id="ddc13FilterLink" onclick="eventsApp.filterButtonClick('#ddc13FilterBttn');">DDC13</a>
+                				</li> 
+                				<li id="ddc14Li">
+                					<a href="#" id="ddc14FilterLink" onclick="eventsApp.filterButtonClick('#ddc14FilterBttn');">DDC14</a>
+                				</li>               				
+                				<li id="ddc15Li">
+                					<a href="#" id="ddc15FilterLink" onclick="eventsApp.filterButtonClick('#ddc15FilterBttn');">DDC15</a>
+                				</li>
+                				<li id="ddc16ALi">
+                					<a href="#" id="ddc16AFilterLink" onclick="eventsApp.filterButtonClick('#ddc16AFilterBttn');">DDC16A</a>
+                				</li> 
+                				<li id="ddc17Li">
+                					<a href="#" id="ddc17FilterLink" onclick="eventsApp.filterButtonClick('#ddc17FilterBttn');">DDC17</a>
+                				</li>               				
+                				<li id="ddc18ALi">
+                					<a href="#" id="ddc18AFilterLink" onclick="eventsApp.filterButtonClick('#ddc18AFilterBttn');">DDC18A</a>
+                				</li>
+                				<li id="ddc22Li">
+                					<a href="#" id="ddc19FilterLink" onclick="eventsApp.filterButtonClick('#ddc19FilterBttn');">DDC19</a>
+                				</li> 
+                				<li id="ddc19Li">
+                					<a href="#" id="ddc20FilterLink" onclick="eventsApp.filterButtonClick('#ddc20FilterBttn');">DDC20</a>
+                				</li>               				
+                				<li id="ddc21Li">
+                					<a href="#" id="ddc21FilterLink" onclick="eventsApp.filterButtonClick('#ddc21FilterBttn');">DDC21</a>
+                				</li>
+                				<li id="ddc22Li">
+                					<a href="#" id="ddc22FilterLink" onclick="eventsApp.filterButtonClick('#ddc22FilterBttn');">DDC22</a>
+                				</li> 
+                				<li id="ddc23Li">
+                					<a href="#" id="ddc23FilterLink" onclick="eventsApp.filterButtonClick('#ddc23FilterBttn');">DDC23</a>
+                				</li>               				
+                				<li id="ddc24Li">
+                					<a href="#" id="ddc24FilterLink" onclick="eventsApp.filterButtonClick('#ddc24FilterBttn');">DDC24</a>
+                				</li>             				
+                			</ul>
+                		</li>
+                	</ul>
+                	<div class="span4 pull-right form-inline" style="text-align: right; padding-top: 8px; padding-right: 8px;">
+						<search field="eventType" exact="false" range="false" rangetext="false" showcalendar="false" showclear="true">
+							<field name="accountUsername" />
+							<field name="accountPosition" />
+							<field name="dateTime" />
+							<field name="dateTimeUpdate" />
+							<field name="location" />
+							<field name="county" />
+							<field name="description" />
+							<field name="fileAttachment1" />
+							<field name="fileAttachment2" />
+							<field name="fileAttachment3" />
+							<field name="archiveRecord" />
+							<field name="deleteRecord" />
+							<field name="eventScenario" />
+							<field name="ddcNo" />
+							<field name="ESF1" />
+							<field name="ESF2" />
+							<field name="ESF3" />
+							<field name="ESF4" />
+							<field name="ESF5" />
+							<field name="ESF6" />
+							<field name="ESF7" />
+							<field name="ESF8" />
+							<field name="ESF9" />
+							<field name="ESF10" />
+							<field name="ESF11" />
+							<field name="ESF12" />
+							<field name="ESF13" />
+							<field name="ESF14" />
+							<field name="ESF15" />
+						</search><space /><clearsearchbutton />
+					</div>
                 </div>
             </nav>
             <!--startOf: page heading-->
             <div class="row">
                 <div class="col-lg-12">
                 	<h1 class="page-header">
-						<span>Texas Events</span><space/><space/>
-						<small><incidentname /></small>
-						<div class="span4 pull-right form-inline" style="text-align: right; font-size: 10pt;">
-					    	<search field="eventType" exact="false" range="false" rangetext="false" showcalendar="false" showclear="true">
-								<field name="accountUsername" />
-								<field name="accountPosition" />
-								<field name="dateTime" />
-								<field name="dateTimeUpdate" />
-								<field name="location" />
-								<field name="county" />
-								<field name="description" />
-								<field name="fileAttachment1" />
-								<field name="fileAttachment2" />
-								<field name="fileAttachment3" />
-								<field name="archiveRecord" />
-								<field name="deleteRecord" />
-					        </search><space />
-					   		<clearsearchbutton />
-						</div>
+                		<viewlink type="button" name="defaultInput" id="defaultInputBttn" class="btn btn-danger btn-sm">
+                			<i class="fa fa-plus fa-fw"></i> Add Record
+                		</viewlink><space/>
+                		<pdflink type="button" id="pdfBttn" class="btn btn-info btn-sm">
+                			<i class="fa fa-file-pdf-o fa-fw"></i> Print PDF
+                		</pdflink>                		
                 	</h1>
-                	<ol class="breadcrumb">
-            			<li class="active">
-              				<i class="fa fa-home" /> Home   
-                  		</li>
-                  	</ol>
                	</div>
             </div>
          	<!--startOf: main content-->
@@ -147,21 +440,40 @@ $(document).ready(function(){eventsApp.init();});
 							<eocfield name="fileAttachment3" />
 							<eocfield name="archiveRecord" />
 							<eocfield name="deleteRecord" />
+							<eocfield name="incidentNamePlaceHolder" />
+							<eocfield name="eventScenario" />
+							<eocfield name="ddcNo" />
+							<eocfield name="ESF1" />
+							<eocfield name="ESF2" />
+							<eocfield name="ESF3" />
+							<eocfield name="ESF4" />
+							<eocfield name="ESF5" />
+							<eocfield name="ESF6" />
+							<eocfield name="ESF7" />
+							<eocfield name="ESF8" />
+							<eocfield name="ESF9" />
+							<eocfield name="ESF10" />
+							<eocfield name="ESF11" />
+							<eocfield name="ESF12" />
+							<eocfield name="ESF13" />
+							<eocfield name="ESF14" />
+							<eocfield name="ESF15" />
 						</if>
 						<div class="panel panel-default">
 	  						<div class="panel-heading">
 	  							<div class="row">
 	  								<div class="col-lg-6" align="left">
 	    								<if test="(contains(//data/@positionname, current()/@accountPosition))">
-	    									<viewlink type="button" name="defaultInput" class="btn btn-default btn-sm">
+	    									<viewlink type="button" name="defaultInput" class="btn btn-primary btn-sm">
 	    										<i class="fa fa-pencil"></i> Edit
-	    									</viewlink>
+	    									</viewlink><space/><space/>
 	    								</if>
+	    								Location:<space/><b><value-of select="@location" />, <value-of select="@county" /></b>
 	    							</div>
 	    							<div class="col-lg-6" align="right">
-	    								<b><value-of select="@location" />, <value-of select="@county" /></b>
+	    								Incident:<space/><b><value-of select="@incidentNamePlaceHolder" /></b>
 	    							</div>	
-	  							</div>							
+	  							</div>
 	  						</div>
 	  						<div class="panel-body">
 	  							<div class="row">
@@ -179,12 +491,36 @@ $(document).ready(function(){eventsApp.init();});
 		            								<font color="red"><value-of select="@dateTime" /></font>
 		            							</dd>
 		            						</if>
+		            						<dt>ESF Type(s):</dt>
+		            						<dd>
+												<if test="@ESF1!=''"><u><value-of select="@ESF1" /></u></if>
+												<if test="@ESF2!=''"><space /><u><value-of select="@ESF2" /></u></if>
+												<if test="@ESF3!=''"><space /><u><value-of select="@ESF3" /></u></if>
+												<if test="@ESF4!=''"><space /><u><value-of select="@ESF4" /></u></if>
+												<if test="@ESF5!=''"><space /><u><value-of select="@ESF5" /></u></if>
+												<if test="@ESF6!=''"><space /><u><value-of select="@ESF6" /></u></if>
+												<if test="@ESF7!=''"><space /><u><value-of select="@ESF7" /></u></if>
+												<if test="@ESF8!=''"><space /><u><value-of select="@ESF8" /></u></if>
+												<if test="@ESF9!=''"><space /><u><value-of select="@ESF9" /></u></if>
+												<if test="@ESF10!=''"><space /><u><value-of select="@ESF10" /></u></if>
+												<if test="@ESF11!=''"><space /><u><value-of select="@ESF11" /></u></if>
+												<if test="@ESF12!=''"><space /><u><value-of select="@ESF12" /></u></if>
+												<if test="@ESF13!=''"><space /><u><value-of select="@ESF13" /></u></if>
+												<if test="@ESF14!=''"><space /><u><value-of select="@ESF14" /></u></if>
+												<if test="@ESF15!=''"><space /><u><value-of select="@ESF15" /></u></if>
+		            						</dd>
 		            						<dt>Event Type:</dt>
 		            						<dd><value-of select="@eventType" /></dd>
 		            					</dl>	  									
 	  								</div>
 	  								<div class="col-lg-8">
-	  									<b><value-of select="@description" /></b>	
+										<b><expression name="shortenedDescription">cast(description as nvarchar(250))</expression></b>
+										<if test="1=0">
+											<expression name="length">datalength(description)</expression>
+										</if>
+										<if test="@length &gt; 250"><space /><space />
+											<viewlink name="defaultDetails" target="dialog"><i>...More</i></viewlink>
+										</if>
 	  								</div>
 	  							</div>
 	  							<div class="row">
@@ -192,13 +528,13 @@ $(document).ready(function(){eventsApp.init();});
 	  									<if test="@archiveRecord='Yes'">
 	  										<font color="red">
 	  											Record has been archived
-	  										</font>
+	  										</font><space/>
 	  									</if>
 	  									<if test="@deleteRecord='Yes'">
 	  										<font color="red">
 	  											Record has been deleted
-	  										</font>
-	  									</if>	  									
+	  										</font><space/>
+	  									</if>
 	  								</div>
 	  								<div class="col-lg-8" align="right">
 	  									<value-of select="fileAttachment1" />

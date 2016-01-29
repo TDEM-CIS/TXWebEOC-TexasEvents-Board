@@ -18,6 +18,97 @@
 //startOf: declaring global variables
 var dataID='<xsl:value-of select="/data/@dataid"></xsl:value-of>';
 
+//startOf: sortSelectLists function
+function sortSelectLists() {
+	var allSelectBox=document.getElementsByTagName('select');
+  	this.optionObject=function(Value, Text, Selected, Disabled) {
+	   	this.Value=Value;
+	    this.Text=Text;
+	    this.Selected=Selected;
+	    this.Disabled=Disabled;
+	    return this;
+   	}
+   	this.addOption=function(select, optionValue, optionTxt, selected, disabled) {
+      	var option=document.createElement("option");
+	    option.value=optionValue;
+	    option.text=optionTxt;
+	    option.selected=selected;
+	    option.disabled=disabled;
+	    try{select.add(option, null);}
+       	catch(ex){select.add(option);}
+   	}
+   	for(var i=0; i &lt; allSelectBox.length; i++) {
+    	if(allSelectBox[i].name != 'userid') {
+       		var selectedSelectBox=allSelectBox[i];
+        	var optionsArray=[];
+        	for(var k=0; k &lt; selectedSelectBox.options.length; k++) {
+            	var selectedOption=selectedSelectBox.options[k];
+            	var thisOptionObject=new optionObject(selectedOption.value, selectedOption.text, selectedOption.selected, selectedOption.disabled);
+            	optionsArray.push(thisOptionObject);
+        	}
+        	optionsArray=optionsArray.sort(function(a, b) {
+        		var a1=a.Text,b1=b.Text;
+            	if(a1!=b1) {
+            		if(a1 &gt; b1){return 1;}
+            		if(a1 &lt; b1){return -1;};
+                	return 0;
+            	}
+        	});
+        	while(selectedSelectBox.options.length &gt; 0){selectedSelectBox.options[0]=null;};
+        	for(var o=0; o &lt; optionsArray.length; o++){addOption(selectedSelectBox, optionsArray[o].Value, optionsArray[o].Text, optionsArray[o].Selected, optionsArray[o].Disabled);}
+    	} 
+	}
+}
+
+//startOf: county helper method
+var countyHelper={
+	DDC: [
+    	["BCFS", "BCFS"],
+    	["00", "SMOC", "SOC", "TFS"],
+	    ["01", "Armstrong", "Briscoe", "Carson", "Castro", "Childress", "Collingsworth", "Dallam", "Deaf Smith", "Donley", "Gray", "Hall", "Hansford", "Hartley", "Hemphill", "Hutchinson", "Lipscomb", "Moore", "Ochiltree", "Oldham", "Parmer", "Potter", "Randall", "Roberts", "Sherman", "Swisher", "Wheeler"],
+	    ["02", "Bailey", "Cochran", "Crosby", "Dickens", "Floyd", "Garza", "Hale", "Hockley", "King", "Lamb", "Lubbock", "Lynn", "Motley", "Terry", "Yoakum"],
+	    ["03", "Archer", "Baylor", "Clay", "Cottle", "Foard", "Hardeman", "Jack", "Montague", "Wichita", "Wilbarger", "Young"],
+	    ["04A", "Denton", "Erath", "Hood", "Johnson", "Palo Pinto", "Parker", "Somervell", "Tarrant", "Wise","DDC04A-Hurst"],
+	    ["04B", "Collin", "Dallas", "Ellis", "Hunt", "Kaufman", "Navarro", "Rockwall","DDC04B-Garland"],
+	    ["05", "Bowie", "Cass", "Delta", "Franklin", "Hopkins", "Lamar", "Morris", "Red River", "Titus"],
+	    ["06", "Anderson", "Camp", "Cherokee", "Gregg", "Harrison", "Henderson", "Marion", "Panola", "Rains", "Rusk", "Smith", "Upshur", "Van Zandt", "Wood"],
+	    ["07", "Brown", "Callahan", "Coleman", "Comanche", "Eastland", "Fisher", "Haskell", "Jones", "Kent", "Knox", "Mitchell", "Nolan", "Runnels", "Scurry", "Shackelford", "Stephens", "Stonewall", "Taylor", "Throckmorton"],
+	    ["08", "Brewster", "Culberson", "El Paso", "Hudspeth", "Jeff Davis", "Presidio"],
+	    ["09A", "Andrews", "Borden", "Dawson", "Ector", "Gaines", "Glasscock", "Howard", "Martin", "Midland", "Winkler","DDC09A-Midland"],
+	    ["09B", "Crane", "Loving", "Pecos", "Reeves", "Terrell", "Upton", "Ward","DDC09B-Ft Stockton"],
+	    ["10", "Coke", "Concho", "Crockett", "Irion", "Kimble", "Mason", "McCulloch", "Menard", "Reagan", "Schleicher", "Sterling", "Sutton", "Tom Green"],
+	    ["11", "Bosque", "Falls", "Freestone", "Hill", "Limestone", "McLennan"],
+	    ["12", "Bastrop", "Blanco", "Burnet", "Caldwell", "Fayette", "Hays", "Lee", "Llano", "Travis", "Williamson", "DDC-CAPITAL"],
+	    ["13", "Brazos", "Burleson", "Grimes", "Leon", "Madison", "Robertson", "Washington"],
+	    ["14", "Angelina", "Houston", "Jasper", "Nacogdoches", "Newton", "Polk", "Sabine", "San Augustine", "San Jacinto", "Shelby", "Trinity", "Tyler"],
+	    ["15", "Hardin", "Jefferson", "Orange"],
+	    ["16A", "Chambers", "Harris","DDC16A-Houston"],
+	    ["16B", "Brazoria", "Galveston","DDC16B-Texas City"],
+	    ["16C", "Liberty", "Montgomery", "Walker", "Waller","DDC16D-Pierce"],
+	    ["16D", "Austin",  "Colorado", "Fort Bend", "Matagorda", "Wharton","DDC16D-Pierce"],
+	    ["17", "Calhoun", "Dewitt", "Goliad", "Gonzales", "Jackson", "Lavaca", "Victoria"],
+	    ["18A", "Bandera","Comal", "Frio", "Gillespie", "Guadalupe", "Kendall", "Kerr", "Medina","DDC18A-San Antonio"],
+	    ["18B", "Atascosa", "Bexar", "Karnes", "Wilson","DDC18B-ARCC/Bexar"],
+	    ["19", "Jim Hogg", "Starr", "Webb", "Zapata"],
+	    ["20", "Aransas", "Bee", "Brooks", "Duval", "Jim Wells", "Kenedy", "Kleberg", "Live Oak", "McMullen", "Nueces", "Refugio", "San Patricio"],
+	    ["21", "Cameron", "Hidalgo", "Willacy"],
+	    ["22", "Cooke", "Fannin", "Grayson"],
+    	["23", "Bell", "Coryell", "Hamilton", "Lampasas", "Milam", "Mills", "San Saba"],
+    	["24", "Dimmit", "Edwards", "Kinney", "La Salle", "Maverick", "Real", "Uvalde", "Val Verde", "Zavala"],
+  	],
+  	getDDC: function(co){return this.deCode(co, this.DDC);},
+  	deCode: function(a, b) {
+    	for(var c=0; c &lt; b.length; c++) {
+      		for(var d=1; d &lt; b[c].length; d++){if(a==b[c][d]){return b[c][0];}}
+    	}
+    	if(/\d/.test(a)) {
+      		return(a.replace(/[^0-9]+/ig,""));
+    	} else {
+      		return(a);
+    	}
+  	}
+};
+
 //startOf: events app method
 var eventsApp={
 	pad: function(arg1) {
@@ -38,15 +129,36 @@ var eventsApp={
   		$('#dataTime').addClass('hidden');
   		$('#dateTimeUpdate').val(newDateTimeUpdate).removeClass('hidden');
   	},
-  	saveBttnClick: function(){$('#saveBttn').click()},
-  	returnBttnClick: function(){$('#returnBttn').click();},
-  	init: function() {
+  	actionBttnClick: function(arg2){$(arg2).click();},
+  	countySelectChange: function() {
+  		var ddcSelect=document.getElementById('county');
+  		$('#ddcNo').val(countyHelper.getDDC(ddcSelect.options[ddcSelect.selectedIndex].text));
+  	},
+  	eventScenarioClick: function() {
+		if($('#eventScenario').val()=='Live' &amp;&amp; $('#eventScenarioBttn').hasClass('btn btn-danger')) {
+			$('#eventScenario').val('TrainingOrExercise');
+			$('#eventScenarioBttn').removeClass().addClass('btn btn-primary').html('Training/Exercise');
+		} else {
+			if($('#eventScenario').val()=='TrainingOrExercise' &amp;&amp; $('#eventScenarioBttn').hasClass('btn btn-primary')) {
+				$('#eventScenario').val('Live');
+				$('#eventScenarioBttn').removeClass().addClass('btn btn-danger').html('Live');
+			}
+		}
+  	},
+	init: function() {
+  		console.log(window.parent.liveTrainPlaceHolder);
+  		sortSelectLists();
+  		$('#eventScenario').val(window.parent.liveTrainPlaceHolder);
+		if(window.parent.liveTrainPlaceHolder=='Live'){$('#eventScenarioBttn').addClass('btn btn-danger').html('Live');}
+		if(window.parent.liveTrainPlaceHolder=='TrainingOrExercise'){$('#eventScenarioBttn').addClass('btn btn-primary').html('Training/Exercise');}
 		if(dataID==0) {
 			$('#addEditSPAN').html('Add Record');
+			$('#addEditI').html(' Add Record');
 			this.dataTimeAutoPopulate();
 		}
 		if(dataID!=0) {
 			$('#addEditSPAN').html('Edit Record');
+			$('#addEditI').html(' Edit Record');
 			$('#advancedOptionsDIV').removeClass('hidden');
 			this.dataTimeUpatedAutoPopulate();
 		}
@@ -67,13 +179,18 @@ $(document).ready(function(){eventsApp.init();});
 				<!--startOf: hidden fields-->
 				<div class="hidden">
 					<grouplist />
-					<incidentname />
 					<savebutton id="saveBttn"></savebutton>
 					<returnbutton id="returnBttn"></returnbutton>
+					<input type="text" id="ddcNo" name="ddcNo" />
+					<input type="text" id="eventScenario" name="eventScenario" />
 					<input type="text" id="accountUsername" name="accountUsername" />
 					<input type="text" id="accountPosition" name="accountPosition" />
 					<input tupe="text" id="accountEmail" name="accountEmail" />
 					<input type="text" id="accountPhone" name="accountPhone" />
+                	<input type="file" name="fileAttachment1" id="fileAttachment1" />
+                	<input type="file" name="fileAttachment2" id="fileAttachment2" />
+                	<input type="file" name="fileAttachment3" id="fileAttachment3" />
+					<input type="text" size="40" id="incidentNamePlaceHolder" name="incidentNamePlaceHolder"><attribute name="value"><incidentname /></attribute></input>
 				</div>
 				<!--startOf: navigation bar-->
 				<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -110,48 +227,38 @@ $(document).ready(function(){eventsApp.init();});
 							<span id="addEditSPAN"></span>
 							<!--startOf: top save and cancel buttons-->
 							<div class="span4 pull-right" style="text-align: right;">
-								<button type="button" class="btn btn-success" id="saveBttnTop" onclick="eventsApp.saveBttnClick();">
-							   		<i class="fa fa-check"></i> Save
-							   	</button><space/>
-							   	<button type="button" class="btn btn-danger" id="cancelBttnTop" onclick="eventsApp.returnBttnClick();">
-              						<i class="fa fa-times"></i> Cancel
-              					</button>
+								<button type="button" id="eventScenarioBttn" name="eventScenarioBttn" onclick="eventsApp.eventScenarioClick();"></button>
               				</div>
 						</h3>
-						<ol class="breadcrumb">
-            				<li>
-              					<i class="fa fa-home" /> Home
-                  			</li>
-            				<li class="active">
-              					<i class="fa fa-plus" /> Add/Edit Record
-                  			</li>
-          				</ol>						
 					</div>
 				</div>
 				<!--startOf: main content-->
 				<div class="row">
 					<div class="col-lg-12">
               			<div class="form-group">
-                			<label for="esf" class="col-sm-2 control-label">ESF:</label>
+                			<label for="esf" class="col-sm-2 control-label">ESF Type(s):</label>
                 			<div class="col-sm-10" style="margin-bottom: 8px;">
-                  				<select id="esf" name="esf" class="form-control">
-                  					<option></option>
-                  					<option value="ESF #1 - Transportation">ESF #1 - Transportation</option>
-                  					<option value="ESF #2 - Communications">ESF #2 - Communications</option>
-                  					<option value="ESF #3 - Public Works and Engineering">ESF #3 - Public Works and Engineering</option>
-                  					<option value="ESF #4 - Firefighting">ESF #4 - Firefighting</option>
-                  					<option value="ESF #5 - Emergency Management">ESF #5 - Emergency Management</option>
-                  					<option value="ESF #6 - Mass Care, Emergency Assistance, Housing and Human Services">ESF #6 - Mass Care, Emergency Assistance, Housing and Human Services</option>
-                  					<option value="ESF #7 - Logistics Management and Resource Support">ESF #7 - Logistics Management and Resource Support</option>
-                  					<option value="ESF #8 - Public Health and Medical Services">ESF #8 - Public Health and Medical Services</option>
-                  					<option value="ESF #9 - Search and Rescue">ESF #9 - Search and Rescue</option>
-                  					<option value="ESF #10 - Oil and Hazardous Materials Response">ESF #10 - Oil and Hazardous Materials Response</option>
-                  					<option value="ESF #11 - Agriculture and Natural Resources">ESF #11 - Agriculture and Natural Resources</option>
-                  					<option value="ESF #12 - Energy">ESF #12 - Energy</option>
-                  					<option value="ESF #13 - Public Safety and Security">ESF #13 - Public Safety and Security</option>
-                  					<option value="ESF #14 - Long-Term Community Recovery">ESF #14 - Long-Term Community Recovery</option>
-                  					<option value="ESF #15 - External Affairs">ESF #15 - External Affairs</option>
-                  				</select>
+                				<div class="row">
+                					<div class="col-sm-5">
+		                				<input type="checkbox" id="ESF1" name="ESF1" value="ESF #1 - Transportation" /> ESF #1 - Transportation<br/>
+		                				<input type="checkbox" id="ESF2" name="ESF2" value="ESF #2 - Communications" /> ESF #2 - Communications<br/>
+		                				<input type="checkbox" id="ESF3" name="ESF3" value="ESF #3 - Public Works" /> ESF #3 - Public Works<br/>
+		                				<input type="checkbox" id="ESF4" name="ESF4" value="ESF #4 - Firefighting" /> ESF #4 - Firefighting<br/>
+		                				<input type="checkbox" id="ESF5" name="ESF5" value="ESF #5 - Emergency Management" /> ESF #5 - Emergency Management<br/>
+		                				<input type="checkbox" id="ESF6" name="ESF6" value="ESF #6 - Mass Care" /> ESF #6 - Mass Care<br/>                		
+		                				<input type="checkbox" id="ESF7" name="ESF7" value="ESF #7 - Logistics" /> ESF #7 - Logistics<br/>
+		                				<input type="checkbox" id="ESF8" name="ESF8" value="ESF #8 - Public Health and Medical" /> ESF #8 - Public Health and Medical
+		                			</div>
+                					<div class="col-sm-5">
+                						<input type="checkbox" id="ESF9" name="ESF9" value="ESF #9 - Search and Rescue" /> ESF #9 - Search and Rescue <br/>
+                						<input type="checkbox" id="ESF10" name="ESF10" value="ESF #10 - HAZMAT" /> ESF #10 - HAZMAT<br/>
+		                				<input type="checkbox" id="ESF11" name="ESF11" value="ESF #11 - Agriculture and Natural Resources" /> ESF #11 - Agriculture and Natural Resources<br/>
+		                				<input type="checkbox" id="ESF12" name="ESF12" value="ESF #12 - Energy" /> ESF #12 - Energy<br/>
+		                				<input type="checkbox" id="ESF13" name="ESF13" value="ESF #13 - Public Safety" /> ESF #13 - Public Safety<br/>
+		                				<input type="checkbox" id="ESF14" name="ESF14" value="ESF #14 - Recovery" /> ESF #14 - Recovery<br/>    
+		                				<input type="checkbox" id="ESF15" name="ESF15" value="ESF #15 - External Affairs" /> ESF #15 - External Affairs
+                					</div>                					
+                				</div>
                 			</div>
               			</div>
               			<div class="form-group">
@@ -209,7 +316,7 @@ $(document).ready(function(){eventsApp.init();});
               			<div class="form-group">
               				<label for="county" class="col-sm-2 control-label">County:</label>
               				<div class="col-sm-10" style="margin-bottom: 8px;">
-              					<select id="county" name="county" class="form-control">
+								<select id="county" name="county" class="form-control" onchange="eventsApp.countySelectChange();">
 									<option></option>
 									<option value="Armstrong">Armstrong</option>
 									<option value="Briscoe">Briscoe</option>
@@ -463,22 +570,22 @@ $(document).ready(function(){eventsApp.init();});
 									<option value="Uvalde">Uvalde</option>
 									<option value="Val Verde">Val Verde</option>
 									<option value="Zavala">Zavala</option>
-              					</select>
+								</select>
               				</div>
               			</div>
 						<div class="form-group">
                 			<label for="asset_description" class="col-sm-2 control-label">Description:</label>
                 			<div class="col-sm-10" style="margin-bottom: 8px;">
-                  				<textarea style="text-align: left;" class="form-control" id="description" name="description" placeholder="Description" row="4" />
+                  				<textarea style="text-align: left;" class="form-control" id="description" name="description" placeholder="Description" row="6" />
                   			</div>
                   		</div>
 						<div class="form-group">
                 			<label for="asset_description" class="col-sm-2 control-label">File Attachment(s):</label>
                 			<div class="col-sm-10" style="margin-bottom: 8px;">
-                				<input type="file" name="fileAttachment1" id="fileAttachment1" class="form-control" /><br/>
-                				<input type="file" name="fileAttachment2" id="fileAttachment2" class="form-control" /><br/>
-                				<input type="file" name="fileAttachment3" id="fileAttachment3" class="form-control" />        				
-                  			</div>
+                				<a href="#" id="fileAttachment1Link" onclick="eventsApp.actionBttnClick('#fileAttachment1');"><i class="fa fa-paperclip"></i> Attachment #1</a><br/>
+                				<a href="#" id="fileAttachment2Llink" onclick="eventsApp.actionBttnClick('#fileAttachment2');"><i class="fa fa-paperclip"></i> Attachment #2</a><br/>
+                				<a href="#" id="fileAttachment3Link" onclick="eventsApp.actionBttnClick('#fileAttachment3');"><i class="fa fa-paperclip"></i> Attachment #3</a>
+                			</div>
                   		</div>
 						<div class="form-group hidden" id="advancedOptionsDIV" style="margin-bottom: 8px;">
                 			<h4 class="text-muted">Advanced Options</h4><hr/>
@@ -487,19 +594,23 @@ $(document).ready(function(){eventsApp.init();});
               				</label>
                 			<label id="deleteRecord" class="col-sm-2 control-label">
                 			<input type="checkbox" id="deleteRecord" name="deleteRecord" value="Yes" /><space/>Delete
-              				</label>              				
+              				</label>
               			</div>
-						<!--startOf: bottom save and cancel buttons-->
-						<div class="span4 pull-right" style="text-align: right;">
-							<button type="button" class="btn btn-success" id="saveBttnBottom" onclick="eventsApp.saveBttnClick();">
-								<i class="fa fa-check"></i> Save
-							</button><space/>
-              				<button type="button" class="btn btn-danger" id="cancelBttnTop" onclick="eventsApp.returnBttnClick();">
-              					<i class="fa fa-times"></i> Cancel
-              				</button>
-						</div>
 					</div>
 				</div>
+				<!--startOf: bottom save and cancel buttons-->
+				<div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+					<div class="col-lg-6" align="left">
+						<button type="button" class="btn btn-success" id="saveBttnBottom" onclick="eventsApp.actionBttnClick('#saveBttn');">
+							<i class="fa fa-check"></i> Save
+						</button>
+					</div>
+					<div class="col-lg-6" align="right">
+						<button type="button" class="btn btn-danger" id="cancelBttnTop" onclick="eventsApp.actionBttnClick('#returnBttn');">
+              				<i class="fa fa-times"></i> Cancel
+              			</button>
+					</div>
+				</div>				
 			</div>
 		</div>
 	</form>
